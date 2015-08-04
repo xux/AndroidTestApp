@@ -13,7 +13,7 @@ import re
 from os import getenv
 from subprocess import check_output
 from subprocess import CalledProcessError
-
+"""
 __author__ = 'mariotaku'
 git_https_url_prefix = 'https://github.com/'
 git_ssh_url_prefix = 'git@github.com:'
@@ -105,14 +105,14 @@ if response.status not in range(200, 204):
     exit(0)
 
 response_values = json.loads(response.read())
-
+"""
 print('-'*10)
 
 upload_url = urlparse.urlparse(re.sub('\{\?([\w\d_\-]+)\}', '', response_values['upload_url']))
 for root, dirnames, filenames in os.walk(os.getcwd()):
     for filename in fnmatch.filter(filenames, '*-release.apk'):
         print(filename)
-
+"""
         conn = httplib.HTTPSConnection(upload_url.hostname)
         conn.request('POST', "%s?%s" % (upload_url.path, urllib.urlencode({'name': filename})),
                      body=open(os.path.join(root, filename), 'r'),
@@ -123,3 +123,4 @@ for root, dirnames, filenames in os.walk(os.getcwd()):
                          'User-Agent': github_header_user_agent
                      })
         print("Upload %s returned %d" % (filename, conn.getresponse().status))
+"""
