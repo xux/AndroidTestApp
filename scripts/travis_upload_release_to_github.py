@@ -94,17 +94,24 @@ response_values = json.loads(response.read())
 """
 print('-'*10)
 
-#from git import Repo
-#join = os.path.join
-#repo = Repo(self.rorepo.working_tree_dir)
-#print repo
-
 sys.path.append(os.path.dirname(__file__))
-sys.path.insert(1,os.path.dirname(__file__))
-
-import gitdb
+repo_src = os.path.join(os.path.dirname(__file__), '..')
 import git
-repo = git.Repo(self.rorepo.working_tree_dir)
+repo = git.Repo(repo_src)
+import shutil
+
+changed = False
+for root, dirnames, filenames in os.walk(os.getcwd()):
+	for filename in fnmatch.filter(filenames, '*-release.apk'):
+		print(filename)
+		shutil.copy2(os.path.join(root, filename), os.path.join(repo_src, 'releases', filename))
+		print repo.git.add(os.path.join('releases', filename))
+		changed = True
+if changed:
+	print repo.git.commit( m='upload compiled release' )
+	print repo.git.push()
+
+
 print(repo.git.status())
 # checkout and track a remote branch
 #print repo.git.checkout( 'origin/somebranch', b='somebranch' )
@@ -114,20 +121,3 @@ print(repo.git.status())
 #print repo.git.commit( m='my commit message' )
 # now we are one commit ahead
 print(repo.git.status())
-
-#upload_url = urlparse.urlparse(re.sub('\{\?([\w\d_\-]+)\}', '', response_values['upload_url']))
-for root, dirnames, filenames in os.walk(os.getcwd()):
-    for filename in fnmatch.filter(filenames, '*-release.apk'):
-        print(filename)
-"""
-        conn = httplib.HTTPSConnection(upload_url.hostname)
-        conn.request('POST', "%s?%s" % (upload_url.path, urllib.urlencode({'name': filename})),
-                     body=open(os.path.join(root, filename), 'r'),
-                     headers={
-                         'Accept': github_header_accept,
-                         'Authorization': github_authorization_header,
-                         'Content-Type': 'application/json',
-                         'User-Agent': github_header_user_agent
-                     })
-        print("Upload %s returned %d" % (filename, conn.getresponse().status))
-"""
