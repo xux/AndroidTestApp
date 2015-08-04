@@ -13,8 +13,9 @@ import re
 from os import getenv
 from subprocess import check_output
 from subprocess import CalledProcessError
+
+__author__ = 'xux'
 """
-__author__ = 'mariotaku'
 git_https_url_prefix = 'https://github.com/'
 git_ssh_url_prefix = 'git@github.com:'
 git_git_url_prefix = 'git://github.com/'
@@ -46,22 +47,8 @@ if not user_repo_name:
 if user_repo_name.endswith(git_file_suffix):
     user_repo_name = user_repo_name[:-len(git_file_suffix)]
 
-current_tag = None
-current_tag_body = None
-#try:
-#    current_tag = check_output(['git', 'describe', '--tags', '--exact-match', '--abbrev=0'],
-#                               stderr=DEVNULL).splitlines()[0]
-#except CalledProcessError:
-#    print('This commit doesn\'t have tag, abort', file=sys.stderr)
-#    exit(0)
-current_tag='debug'
-print(current_tag)
-try:
-    current_tag_body = '\n'.join(
-        check_output(['git', 'show', '-s', '--format=%b', current_tag], stderr=DEVNULL).splitlines()[2:])
-except CalledProcessError:
-    current_tag_body = "Automatic upload for version %s" % current_tag
-print(current_tag_body)
+
+print user_repo_name
 
 #github_access_token = getenv('GITHUB_ACCESS_TOKEN')
 github_access_token="5794d6f8c0f3933da1647b39e7474ee671dc70c7"
@@ -73,8 +60,6 @@ if not github_access_token:
 github_authorization_header = "token %s" % github_access_token
 
 print('Creating release for tag %s' % current_tag)
-
-req_headers = {'Accept': github_header_accept}
 
 conn = httplib.HTTPSConnection('api.github.com')
 conn.request('POST', '/repos/%s/releases' % user_repo_name,
@@ -90,6 +75,7 @@ conn.request('POST', '/repos/%s/releases' % user_repo_name,
                  'User-Agent': github_header_user_agent
              })
 response = conn.getresponse()
+print response
 if response.status == 422:
     conn = httplib.HTTPSConnection('api.github.com')
     conn.request('GET', '/repos/%s/releases/tags/%s' % (user_repo_name, current_tag),
@@ -107,6 +93,17 @@ if response.status not in range(200, 204):
 response_values = json.loads(response.read())
 """
 print('-'*10)
+import sh
+git = sh.git.bake(_cwd='./')
+print git.status()
+# checkout and track a remote branch
+print git.checkout('-b', 'somebranch')
+# add a file
+print git.add('somefile')
+# commit
+print git.commit(m='my commit message')
+# now we are one commit ahead
+print git.status()
 
 #upload_url = urlparse.urlparse(re.sub('\{\?([\w\d_\-]+)\}', '', response_values['upload_url']))
 for root, dirnames, filenames in os.walk(os.getcwd()):
