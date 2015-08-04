@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+git remote rm origin
 git remote set-url origin https://xux:5794d6f8c0f3933da1647b39e7474ee671dc70c7@github.com/xux/AndroidTestApp.git
 git config --global user.email "ivan.tilikin@gmail.com"
 git config --global user.name "xux"
