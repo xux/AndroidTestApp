@@ -2,5 +2,6 @@
 
 git config --global user.email "ivan.tilikin@gmail.com"
 git config --global user.name "xux"
+git config --global push.default matching
 
 python scripts/travis_upload_release_to_github.py
