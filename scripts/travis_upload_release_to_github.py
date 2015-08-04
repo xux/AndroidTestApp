@@ -99,6 +99,8 @@ print('-'*10)
 #repo = Repo(self.rorepo.working_tree_dir)
 #print repo
 
+sys.path.append(os.path.dirname(__file__))
+
 import git
 repo = git.Repo(self.rorepo.working_tree_dir)
 print repo.git.status()
