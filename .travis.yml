@@ -20,7 +20,9 @@ android:
     # - sys-img-armeabi-v7a-android-19
     # - sys-img-x86-android-17
 
-script: bash gradlew build signing --stacktrace
+#script: bash gradlew build signing --stacktrace
+script: bash gradlew build --stacktrace
+
 
 before_install:
   - sudo apt-get update -qq
