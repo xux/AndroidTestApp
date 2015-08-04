@@ -27,4 +27,4 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y python2.7
 
-after_success: python scripts/travis_upload_release_to_github.py
+after_success: bash deploy
