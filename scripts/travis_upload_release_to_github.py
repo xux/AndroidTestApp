@@ -54,11 +54,13 @@ try:
 except CalledProcessError:
     print('This commit doesn\'t have tag, abort', file=sys.stderr)
     exit(0)
+print(current_tag)
 try:
     current_tag_body = '\n'.join(
         check_output(['git', 'show', '-s', '--format=%b', current_tag], stderr=DEVNULL).splitlines()[2:])
 except CalledProcessError:
     current_tag_body = "Automatic upload for version %s" % current_tag
+print(current_tag_body)
 
 github_access_token = getenv('GITHUB_ACCESS_TOKEN')
 
@@ -102,9 +104,13 @@ if response.status not in range(200, 204):
 
 response_values = json.loads(response.read())
 
+print('-'*10)
+
 upload_url = urlparse.urlparse(re.sub('\{\?([\w\d_\-]+)\}', '', response_values['upload_url']))
 for root, dirnames, filenames in os.walk(os.getcwd()):
     for filename in fnmatch.filter(filenames, '*-release.apk'):
+        print(filename)
+
         conn = httplib.HTTPSConnection(upload_url.hostname)
         conn.request('POST', "%s?%s" % (upload_url.path, urllib.urlencode({'name': filename})),
                      body=open(os.path.join(root, filename), 'r'),
