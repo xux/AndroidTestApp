@@ -93,17 +93,24 @@ if response.status not in range(200, 204):
 response_values = json.loads(response.read())
 """
 print('-'*10)
-import sh
-git = sh.git.bake(_cwd='./')
-print git.status()
+
+#from git import Repo
+#join = os.path.join
+#repo = Repo(self.rorepo.working_tree_dir)
+#print repo
+
+import git
+repo = git.Repo(self.rorepo.working_tree_dir)
+print repo.git.status()
 # checkout and track a remote branch
-#print git.checkout('-b', 'somebranch')
+#print repo.git.checkout( 'origin/somebranch', b='somebranch' )
 # add a file
-#print git.add('somefile')
+#print repo.git.add( 'somefile' )
 # commit
-#print git.commit(m='my commit message')
+#print repo.git.commit( m='my commit message' )
 # now we are one commit ahead
-print git.status()
+print repo.git.status()
+
 
 #upload_url = urlparse.urlparse(re.sub('\{\?([\w\d_\-]+)\}', '', response_values['upload_url']))
 for root, dirnames, filenames in os.walk(os.getcwd()):
