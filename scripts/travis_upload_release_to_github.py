@@ -108,7 +108,7 @@ response_values = json.loads(response.read())
 """
 print('-'*10)
 
-upload_url = urlparse.urlparse(re.sub('\{\?([\w\d_\-]+)\}', '', response_values['upload_url']))
+#upload_url = urlparse.urlparse(re.sub('\{\?([\w\d_\-]+)\}', '', response_values['upload_url']))
 for root, dirnames, filenames in os.walk(os.getcwd()):
     for filename in fnmatch.filter(filenames, '*-release.apk'):
         print(filename)
