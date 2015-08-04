@@ -24,4 +24,4 @@ ehthumbs.db
 Thumbs.db
 
 # Private files
-/signing.properties
+#/signing.properties
