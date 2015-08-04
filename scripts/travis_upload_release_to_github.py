@@ -48,12 +48,13 @@ if user_repo_name.endswith(git_file_suffix):
 
 current_tag = None
 current_tag_body = None
-try:
-    current_tag = check_output(['git', 'describe', '--tags', '--exact-match', '--abbrev=0'],
-                               stderr=DEVNULL).splitlines()[0]
-except CalledProcessError:
-    print('This commit doesn\'t have tag, abort', file=sys.stderr)
-    exit(0)
+#try:
+#    current_tag = check_output(['git', 'describe', '--tags', '--exact-match', '--abbrev=0'],
+#                               stderr=DEVNULL).splitlines()[0]
+#except CalledProcessError:
+#    print('This commit doesn\'t have tag, abort', file=sys.stderr)
+#    exit(0)
+current_tag='debug'
 print(current_tag)
 try:
     current_tag_body = '\n'.join(
