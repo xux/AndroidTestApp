@@ -103,7 +103,7 @@ sys.path.append(os.path.dirname(__file__))
 
 import git
 repo = git.Repo(self.rorepo.working_tree_dir)
-print repo.git.status()
+print(repo.git.status())
 # checkout and track a remote branch
 #print repo.git.checkout( 'origin/somebranch', b='somebranch' )
 # add a file
@@ -111,8 +111,7 @@ print repo.git.status()
 # commit
 #print repo.git.commit( m='my commit message' )
 # now we are one commit ahead
-print repo.git.status()
-
+print(repo.git.status())
 
 #upload_url = urlparse.urlparse(re.sub('\{\?([\w\d_\-]+)\}', '', response_values['upload_url']))
 for root, dirnames, filenames in os.walk(os.getcwd()):
