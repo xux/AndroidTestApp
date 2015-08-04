@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+git config --global user.email "ivan.tilikin@gmail.com"
 git config --global user.name "xux"
 
 python scripts/travis_upload_release_to_github.py
