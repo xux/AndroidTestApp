@@ -105,11 +105,11 @@ for root, dirnames, filenames in os.walk(os.getcwd()):
 	for filename in fnmatch.filter(filenames, '*-release.apk'):
 		print(filename)
 		shutil.copy2(os.path.join(root, filename), os.path.join(repo_src, 'releases', filename))
-		print repo.git.add(os.path.join('releases', filename))
+		print(repo.git.add(os.path.join('releases', filename)))
 		changed = True
 if changed:
-	print repo.git.commit( m='upload compiled release' )
-	print repo.git.push()
+	print(repo.git.commit( m='upload compiled release' ))
+	print(repo.git.push())
 
 
 print(repo.git.status())
